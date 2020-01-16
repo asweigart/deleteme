@@ -3,6 +3,7 @@ The ancient seed-sowing game."""
 
 import sys
 
+# fmt: off
 # Every pit label, in counterclockwise order starting with A:
 PIT_LABELS = 'ABCDEF1LKJIHG2'
 
@@ -35,11 +36,13 @@ E      | {} | {} | {} | {} | {} | {} |      E
 
 # How many seeds are in each pit at the start of a new game:
 STARTING_NUMBER_OF_SEEDS = 4
+# fmt: on
 
 
 def main():
     """Runs a single game of Mancala."""
-    print("""MANCALA, by Al Sweigart al@inventwithpython.com
+    print(
+        """MANCALA, by Al Sweigart al@inventwithpython.com
 
 The ancient seed-sowing game. Grab the seeds from a pit on your side
 and place one in each following pit, going counterclockwise and
@@ -53,7 +56,8 @@ claims the remaining seeds for their store, and the winner is the one
 with the most seeds.
 
 More info at https://en.wikipedia.org/wiki/Mancala
-""")
+"""
+    )
 
     gameBoard = getNewBoard()
     playerTurn = '1'  # Player 1 goes first.
@@ -82,14 +86,15 @@ def getNewBoard():
     """Return a dictionary representing a Mancala board in the starting
     state: 4 seeds in each pit and 0 in the stores."""
 
+    # Syntactic sugar - Use a shorter variable name:
+    s = STARTING_NUMBER_OF_SEEDS
+
     # Create the data structure for the board, with 0 seeds in the
     # stores and the starting number of seeds in the pits:
-    board = {'1': 0, '2': 0}
-    for pit in 'ABCDEFGHIJKL':
-        board[pit] = STARTING_NUMBER_OF_SEEDS
-
-    # Return the newly created board data structure:
-    return board
+    # fmt: off
+    return {'1': 0, '2': 0, 'A': s, 'B': s, 'C': s, 'D': s, 'E': s,
+            'F': s, 'G': s, 'H': s, 'I': s, 'J': s, 'K': s, 'L': s}
+    # fmt: on
 
 
 def displayBoard(board):
@@ -125,9 +130,8 @@ def getPlayerMove(turn, board):
             sys.exit()
 
         # Make sure it is a valid pit to select:
-        if (
-            (turn == '1' and pit not in PLAYER_1_PITS)
-            or (turn == '2' and pit not in PLAYER_2_PITS)
+        if (turn == '1' and pit not in PLAYER_1_PITS) or (
+            turn == '2' and pit not in PLAYER_2_PITS
         ):
             print('Please pick a letter on your side of the board.')
             continue  # Ask again.
@@ -187,12 +191,12 @@ def checkForWinner(board):
         # Player 2 gets all the remaining seeds on their side:
         board['2'] += player2Total
         for pit in PLAYER_2_PITS:
-            board[pit] = 0 # Set all pits to 0.
+            board[pit] = 0  # Set all pits to 0.
     elif player2Total == 0:
         # Player 1 gets all the remaining seeds on their side:
         board['1'] += player1Total
         for pit in PLAYER_1_PITS:
-            board[pit] = 0 # Set all pits to 0.
+            board[pit] = 0  # Set all pits to 0.
     else:
         return 'no winner'  # No one has won yet.
 
@@ -203,7 +207,6 @@ def checkForWinner(board):
         return '2'
     else:
         return 'tie'
-
 
 
 # If the program is run (instead of imported), run the game:

@@ -44,6 +44,8 @@ More info at https://en.wikipedia.org/wiki/Tower_of_Hanoi
 
 
 def getPlayerMove(towers):
+    """Ask the player which disk to move. Returns a two-string tuple
+    (fromPole, toPole) where the "poles" are 'A', 'B', or 'C'."""
     while True:
         # Keep asking player until they enter a valid move:
         print('Enter the letters of "from" and "to" poles, or QUIT.')

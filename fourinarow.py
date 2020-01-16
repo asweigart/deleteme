@@ -20,19 +20,22 @@ BOARD_TEMPLATE = """
     |{}{}{}{}{}{}{}|
     +-------+"""
 
+
 def main():
     """Runs a single game of Four in a Row."""
-    print("""FOUR IN A ROW, by Al Sweigart al@inventwithpython.com
+    print(
+        """FOUR IN A ROW, by Al Sweigart al@inventwithpython.com
 
 Two players take turns dropping tiles into one of seven columns, trying
 to make four in a row horizontally, vertically, or diagonally.
-""")
+"""
+    )
 
     # Set up a new game:
     gameBoard = getNewBoard()
     playerTurn = PLAYER_X
 
-    while True: # Main game loop.
+    while True:  # Main game loop.
         # Draw board and get player's move:
         displayBoard(gameBoard)
         playerMove = getPlayerMove(playerTurn, gameBoard)
@@ -96,9 +99,9 @@ def getPlayerMove(playerTile, board):
         if move not in ('1', '2', '3', '4', '5', '6', '7'):
             print('Enter a number from 1 to 7.')
             input('Press Enter to continue...')
-            continue # Ask again for their move.
+            continue  # Ask again for their move.
 
-        move = int(move) - 1 # The -1 adjusts for 0-based index.
+        move = int(move) - 1  # The -1 adjusts for 0-based index.
 
         # Starting from the bottom, find the first not-occupied space.
         for i in range(5, -1, -1):
@@ -113,14 +116,14 @@ def isFull(board):
     for y in range(6):
         for x in range(7):
             if board[(x, y)] != EMPTY_SPACE:
-                return False # Found an empty space, so return False.
-    return True # All spaces are full.
+                return False  # Found an empty space, so return False.
+    return True  # All spaces are full.
 
 
 def isWinner(playerTile, board):
     """Returns True if `playerTile` has four tiles in a row on `board`,
     otherwise returns False."""
-    b = board # Syntactic sugar - a shorter name instead of `board`.
+    b = board  # Syntactic sugar - a shorter name instead of `board`.
 
     # Go through the entire board, checking for four-in-a-row:
     for x in range(4):
