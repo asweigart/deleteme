@@ -183,9 +183,12 @@ def checkForWinner(board):
     player's pits are all empty; the other player claims the remaining
     seeds for their store. The winner is whoever has the most seeds."""
 
-    b = board  # Make a shorter variable name to use in this function.
-    player1Total = b['A'] + b['B'] + b['C'] + b['D'] + b['E'] + b['F']
-    player2Total = b['G'] + b['H'] + b['I'] + b['J'] + b['K'] + b['L']
+    player1Total = 0
+    for pit in PLAYER_1_PITS:
+        player1Total += board[pit]
+    player2Total = 0
+    for pit in PLAYER_2_PITS:
+        player2Total += board[pit]
 
     if player1Total == 0:
         # Player 2 gets all the remaining seeds on their side:
@@ -201,9 +204,9 @@ def checkForWinner(board):
         return 'no winner'  # No one has won yet.
 
     # Game is over, find player with largest score.
-    if b['1'] > b['2']:
+    if board['1'] > board['2']:
         return '1'
-    elif b['2'] > b['1']:
+    elif board['2'] > board['1']:
         return '2'
     else:
         return 'tie'
