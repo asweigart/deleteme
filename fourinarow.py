@@ -20,6 +20,9 @@ BOARD_TEMPLATE = """
     |{}{}{}{}{}{}{}|
     +-------+"""
 
+BOARD_WIDTH = 7
+BOARD_HEIGHT = 6
+
 
 def main():
     """Runs a single game of Four in a Row."""
@@ -64,8 +67,8 @@ def getNewBoard():
     The keys are (x, y) tuples of two integers, and the values are one
     of the 'X', 'O' or '.' (empty space) strings."""
     board = {}
-    for y in range(6):
-        for x in range(7):
+    for y in range(BOARD_HEIGHT):
+        for x in range(BOARD_WIDTH):
             board[(x, y)] = EMPTY_SPACE
     return board
 
@@ -77,8 +80,8 @@ def displayBoard(board):
     # template. The list holds all of the board's tiles (and empty
     # spaces) going left to right, top to bottom:
     tileChars = []
-    for y in range(6):
-        for x in range(7):
+    for y in range(BOARD_HEIGHT):
+        for x in range(BOARD_WIDTH):
             tileChars.append(board[(x, y)])
 
     # Display the board:
@@ -104,17 +107,16 @@ def getPlayerMove(playerTile, board):
         move = int(move) - 1  # The -1 adjusts for 0-based index.
 
         # Starting from the bottom, find the first not-occupied space.
-        for i in range(5, -1, -1):
+        for i in range(BOARD_HEIGHT - 1, -1, -1):
             if board[(move, i)] == EMPTY_SPACE:
                 return (move, i)
-        # At this point, go back to the start of the loop.
 
 
 def isFull(board):
     """Returns True if the `board` has no empty spaces, otherwise returns
     False."""
-    for y in range(6):
-        for x in range(7):
+    for y in range(BOARD_HEIGHT):
+        for x in range(BOARD_WIDTH):
             if board[(x, y)] != EMPTY_SPACE:
                 return False  # Found an empty space, so return False.
     return True  # All spaces are full.
@@ -126,8 +128,8 @@ def isWinner(playerTile, board):
     b = board  # Syntactic sugar - a shorter name instead of `board`.
 
     # Go through the entire board, checking for four-in-a-row:
-    for x in range(4):
-        for y in range(6):
+    for x in range(BOARD_WIDTH - 3):
+        for y in range(BOARD_HEIGHT - 1):
             # Check for four-in-a-row going across to the right:
             space1 = b[(x, y)]
             space2 = b[(x + 1, y)]
@@ -136,8 +138,8 @@ def isWinner(playerTile, board):
             if space1 == space2 == space3 == space4 == playerTile:
                 return True
 
-    for x in range(7):
-        for y in range(3):
+    for x in range(BOARD_WIDTH - 1):
+        for y in range(BOARD_HEIGHT - 3):
             # Check for four-in-a-row going down:
             space1 = b[(x, y)]
             space2 = b[(x, y + 1)]
@@ -146,8 +148,8 @@ def isWinner(playerTile, board):
             if space1 == space2 == space3 == space4 == playerTile:
                 return True
 
-    for x in range(4):
-        for y in range(3):
+    for x in range(BOARD_WIDTH - 3):
+        for y in range(BOARD_HEIGHT - 3):
             # Check for four-in-a-row going right-down diagonal:
             space1 = b[(x, y)]
             space2 = b[(x + 1, y + 1)]
