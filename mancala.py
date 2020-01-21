@@ -3,14 +3,11 @@ The ancient seed-sowing game."""
 
 import sys
 
-# fmt: off
-# Every pit label, in counterclockwise order starting with A:
-PIT_LABELS = 'ABCDEF1LKJIHG2'
-
 # A tuple of the player's pits:
 PLAYER_1_PITS = ('A', 'B', 'C', 'D', 'E', 'F')
 PLAYER_2_PITS = ('G', 'H', 'I', 'J', 'K', 'L')
 
+# fmt: off
 # A dictionary whose keys are pits and values are opposite pit:
 OPPOSITE_PIT = {'A': 'G', 'B': 'H', 'C': 'I', 'D': 'J', 'E': 'K',
                    'F': 'L', 'G': 'A', 'H': 'B', 'I': 'C', 'J': 'D',
@@ -20,6 +17,10 @@ OPPOSITE_PIT = {'A': 'G', 'B': 'H', 'C': 'I', 'D': 'J', 'E': 'K',
 NEXT_PIT = {'A': 'B', 'B': 'C', 'C': 'D', 'D': 'E', 'E': 'F', 'F': '1',
             '1': 'L', 'L': 'K', 'K': 'J', 'J': 'I', 'I': 'H', 'H': 'G',
             'G': '2', '2': 'A'}
+# fmt: on
+
+# Every pit label, in counterclockwise order starting with A:
+PIT_LABELS = 'ABCDEF1LKJIHG2'
 
 # The template string for displaying the board:
 BOARD_TEMPLATE = """
@@ -36,7 +37,6 @@ E      | {} | {} | {} | {} | {} | {} |      E
 
 # How many seeds are in each pit at the start of a new game:
 STARTING_NUMBER_OF_SEEDS = 4
-# fmt: on
 
 
 def main():
@@ -62,7 +62,7 @@ More info at https://en.wikipedia.org/wiki/Mancala
     gameBoard = getNewBoard()
     playerTurn = '1'  # Player 1 goes first.
 
-    while True:  # Main game loop.
+    while True:  # Run a player's turn.
         # Display board and get the player's move:
         displayBoard(gameBoard)
         playerMove = getPlayerMove(playerTurn, gameBoard)
@@ -73,13 +73,13 @@ More info at https://en.wikipedia.org/wiki/Mancala
         # Check if the game ended and a player has won:
         winner = checkForWinner(gameBoard)
         if winner == '1' or winner == '2':
-            displayBoard(gameBoard)
+            displayBoard(gameBoard)  # Display the board one last time.
             print(f'Player {winner} has won!')
-            break
+            sys.exit()
         elif winner == 'tie':
-            displayBoard(gameBoard)
+            displayBoard(gameBoard)  # Display the board one last time.
             print('There is a tie!')
-            break
+            sys.exit()
 
 
 def getNewBoard():
@@ -111,18 +111,18 @@ def displayBoard(board):
     print(BOARD_TEMPLATE.format(*seedAmounts))
 
 
-def getPlayerMove(turn, board):
+def getPlayerMove(playerTurn, board):
     """Asks the player which pit on their side of the board they
     select to sow seeds from. Returns the uppercase letter label of the
     selected pit as a string."""
 
     while True:  # Keep asking the player until they enter a valid move.
         # Ask the player to select a pit on their side:
-        if turn == '1':
+        if playerTurn == '1':
             print('Player 1, choose move: A-F (or QUIT)')
-        elif turn == '2':
+        elif playerTurn == '2':
             print('Player 2, choose move: G-L (or QUIT)')
-        pit = input().upper().strip()
+        pit = input('> ').upper().strip()
 
         # Check if the player wants to quit:
         if pit == 'QUIT':
@@ -130,50 +130,53 @@ def getPlayerMove(turn, board):
             sys.exit()
 
         # Make sure it is a valid pit to select:
-        if (turn == '1' and pit not in PLAYER_1_PITS) or (
-            turn == '2' and pit not in PLAYER_2_PITS
+        if (playerTurn == '1' and pit not in PLAYER_1_PITS) or (
+            playerTurn == '2' and pit not in PLAYER_2_PITS
         ):
             print('Please pick a letter on your side of the board.')
-            continue  # Ask again.
+            continue  # Ask player again for their move.
         if board.get(pit) == 0:
             print('Please pick a non-empty pit.')
-            continue  # Ask again.
+            continue  # Ask player again for their move.
         return pit
 
 
-def makeMove(board, turn, pit):
-    """Modify the `board` data structure so that the player 1 or 2 in `turn`
-    selected `pit` as their pit to sow seeds from. Returns either '1'
-    or '2' for whose turn it is next."""
+def makeMove(board, playerTurn, pit):
+    """Modify the `board` data structure so that the player 1 or 2 in
+    `turn` selected `pit` as their pit to sow seeds from. Returns either
+    '1' or '2' for whose turn it is next."""
 
     seedsToSow = board[pit]  # Get number of seeds from selected pit.
     board[pit] = 0  # Empty out the selected pit.
 
     while seedsToSow > 0:  # Continue sowing until we have no more seeds.
-        pit = NEXT_PIT[pit]  # Next pit.
-        if (turn == '1' and pit == '2') or (turn == '2' and pit == '1'):
+        pit = NEXT_PIT[pit]  # Move on to the next pit.
+        if (playerTurn == '1' and pit == '2') or (
+            playerTurn == '2' and pit == '1'
+        ):
             continue  # Skip opponent's store.
-        board[pit] += 1  # Add one seed to the pit.
-        seedsToSow -= 1  # Decrease one seed from seedsToSow.
+        board[pit] += 1
+        seedsToSow -= 1
 
     # If the last seed went into the player's store, they go again.
-    if (pit == turn == '1') or (pit == turn == '2'):
-        return turn  # Last seed in player's store; take another turn.
+    if (pit == playerTurn == '1') or (pit == playerTurn == '2'):
+        # The last seed landed in the player's store; take another turn.
+        return playerTurn
 
     # Check if last seed was in an empty pit; take opposite pit's seeds.
-    if turn == '1' and pit in PLAYER_1_PITS and board[pit] == 1:
+    if playerTurn == '1' and pit in PLAYER_1_PITS and board[pit] == 1:
         oppositePit = OPPOSITE_PIT[pit]
         board['1'] += board[oppositePit]
         board[oppositePit] = 0
-    elif turn == '2' and pit in PLAYER_2_PITS and board[pit] == 1:
+    elif playerTurn == '2' and pit in PLAYER_2_PITS and board[pit] == 1:
         oppositePit = OPPOSITE_PIT[pit]
         board['2'] += board[oppositePit]
         board[oppositePit] = 0
 
     # Return the other player as the next player:
-    if turn == '1':
+    if playerTurn == '1':
         return '2'
-    elif turn == '2':
+    elif playerTurn == '2':
         return '1'
 
 
@@ -183,12 +186,8 @@ def checkForWinner(board):
     player's pits are all empty; the other player claims the remaining
     seeds for their store. The winner is whoever has the most seeds."""
 
-    player1Total = 0
-    for pit in PLAYER_1_PITS:
-        player1Total += board[pit]
-    player2Total = 0
-    for pit in PLAYER_2_PITS:
-        player2Total += board[pit]
+    player1Total = sum([board[pit] for pit in PLAYER_1_PITS])
+    player2Total = sum([board[pit] for pit in PLAYER_2_PITS])
 
     if player1Total == 0:
         # Player 2 gets all the remaining seeds on their side:
