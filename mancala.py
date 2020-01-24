@@ -44,8 +44,8 @@ def main():
     print(
         """MANCALA, by Al Sweigart al@inventwithpython.com
 
-The ancient seed-sowing game. Grab the seeds from a pit on your side
-and place one in each following pit, going counterclockwise and
+The ancient two-player, seed-sowing game. Grab the seeds from a pit on
+your side and place one in each following pit, going counterclockwise and
 skipping your opponent's store. If your last seed lands in an empty
 pit of yours, move the opposite pit's seeds into that pit. The
 goal is to get the most seeds in your store on the side of the board.
@@ -58,6 +58,7 @@ with the most seeds.
 More info at https://en.wikipedia.org/wiki/Mancala
 """
     )
+    input('Press Enter to begin...')
 
     gameBoard = getNewBoard()
     playerTurn = '1'  # Player 1 goes first.

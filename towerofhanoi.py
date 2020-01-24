@@ -59,23 +59,20 @@ def getPlayerMove(towers):
         # Make sure the user entered valid tower letters:
         if playerMove not in ('AB', 'AC', 'BA', 'BC', 'CA', 'CB'):
             print('Enter one of AB, AC, BA, BC, CA, or CB.')
-            input('Press Enter to continue...')
             continue  # Ask player again for their move.
 
         # Syntactic sugar - Use more descriptive variable names:
         fromTower, toTower = playerMove[0], playerMove[1]
 
-        # Make sure there is at least one disk on the "from" tower:
         if len(towers[fromTower]) == 0:
+            # Make sure there is at least one disk on the "from" tower:
             print('You selected a tower with no disks.')
-            input('Press Enter to continue...')
             continue  # Ask player again for their move.
         elif len(towers[toTower]) == 0:
             # Any disk can be moved onto an empty "to" tower:
             return fromTower, toTower
         elif towers[toTower][-1] < towers[fromTower][-1]:
             print('Can\'t put larger disks on top of smaller ones.')
-            input('Press Enter to continue...')
             continue  # Ask player again for their move.
         else:
             # This is a valid move, so return the selected towers:

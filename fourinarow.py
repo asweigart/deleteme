@@ -4,7 +4,7 @@ A tile-dropping game to get four in a row, similar to Connect Four."""
 import sys
 
 # Constants used for displaying the board:
-EMPTY_SPACE = '.'
+EMPTY_SPACE = '.'  # A period is easier to count than a space.
 PLAYER_X = 'X'
 PLAYER_O = 'O'
 
@@ -56,8 +56,6 @@ to make four in a row horizontally, vertically, or diagonally.
             displayBoard(gameBoard)  # Display the board one last time.
             print('There is a tie!')
             sys.exit()
-        else:
-            pass  # Game hasn't ended, simply go on to the next turn.
 
         # Switch turns to other player:
         if playerTurn == PLAYER_X:
@@ -107,10 +105,14 @@ def getPlayerMove(playerTile, board):
 
         if move not in COLUMN_LABELS:
             print(f'Enter a number from 1 to {BOARD_WIDTH}.')
-            input('Press Enter to continue...')
             continue  # Ask player again for their move.
 
         move = int(move) - 1  # The -1 adjusts for 0-based index.
+
+        # If the column is full, ask for a move again:
+        if board[(move, 0)] != EMPTY_SPACE:
+            print('That column is full, select another one.')
+            continue  # Ask player again for their move.
 
         # Starting from the bottom, find the first empty space.
         for i in range(BOARD_HEIGHT - 1, -1, -1):
@@ -123,7 +125,7 @@ def isFull(board):
     returns False."""
     for y in range(BOARD_HEIGHT):
         for x in range(BOARD_WIDTH):
-            if board[(x, y)] != EMPTY_SPACE:
+            if board[(x, y)] == EMPTY_SPACE:
                 return False  # Found an empty space, so return False.
     return True  # All spaces are full.
 
@@ -134,7 +136,7 @@ def isWinner(playerTile, board):
 
     # Go through the entire board, checking for four-in-a-row:
     for x in range(BOARD_WIDTH - 3):
-        for y in range(BOARD_HEIGHT - 1):
+        for y in range(BOARD_HEIGHT):
             # Check for four-in-a-row going across to the right:
             space1 = board[(x, y)]
             space2 = board[(x + 1, y)]
@@ -143,7 +145,7 @@ def isWinner(playerTile, board):
             if space1 == space2 == space3 == space4 == playerTile:
                 return True
 
-    for x in range(BOARD_WIDTH - 1):
+    for x in range(BOARD_WIDTH):
         for y in range(BOARD_HEIGHT - 3):
             # Check for four-in-a-row going down:
             space1 = board[(x, y)]
