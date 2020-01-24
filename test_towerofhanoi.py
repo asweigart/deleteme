@@ -9,20 +9,14 @@ def test_constants():
     assert towerofhanoi.TOTAL_DISKS == 5
     assert towerofhanoi.COMPLETE_TOWER == [5, 4, 3, 2, 1]
 
-def getPlayerMove(capsys):
+def test_getPlayerMove(capsys):
     towers = {'A': copy.copy(towerofhanoi.COMPLETE_TOWER), 'B': [], 'C': []}
 
-    sys.stdin = io.StringIO('AB\nquit\n')
-    with pytest.raises(SystemExit):
-        towerofhanoi.getPlayerMove(towers)
-    captured = capsys.readouterr()
-    assert 'Thanks for playing!' in captured.out
+    sys.stdin = io.StringIO('AB\n')
+    assert towerofhanoi.getPlayerMove(towers) == ('A', 'B')
 
-    sys.stdin = io.StringIO('ab\nquit\n')
-    with pytest.raises(SystemExit):
-        towerofhanoi.getPlayerMove(towers)
-    captured = capsys.readouterr()
-    assert 'Thanks for playing!' in captured.out
+    sys.stdin = io.StringIO(' ab \n')
+    assert towerofhanoi.getPlayerMove(towers) == ('A', 'B')
 
     # Test entering an invalid move:
     sys.stdin = io.StringIO('invalid\nquit\n')
@@ -34,19 +28,19 @@ def getPlayerMove(capsys):
     # Test quitting:
     with pytest.raises(SystemExit):
         sys.stdin = io.StringIO('QUIT\n')
-        towerofhanoi.getPlayerMove('X', towers)
+        towerofhanoi.getPlayerMove(towers)
 
     with pytest.raises(SystemExit):
         sys.stdin = io.StringIO('quit\n')
-        towerofhanoi.getPlayerMove('X', towers)
+        towerofhanoi.getPlayerMove(towers)
 
     with pytest.raises(SystemExit):
         sys.stdin = io.StringIO('qUiT\n')
-        towerofhanoi.getPlayerMove('X', towers)
+        towerofhanoi.getPlayerMove(towers)
 
     with pytest.raises(SystemExit):
         sys.stdin = io.StringIO(' quit \n')
-        towerofhanoi.getPlayerMove('X', towers)
+        towerofhanoi.getPlayerMove(towers)
 
     # Test selecting an empty tower:
     sys.stdin = io.StringIO('ba\nquit\n')
@@ -56,7 +50,8 @@ def getPlayerMove(capsys):
     assert 'You selected a tower with no disks.' in captured.out
 
     # Test trying to put a disk on a smaller disk:
-    sys.stdin = io.StringIO('ab\nab\nquit\n')
+    towers = {'A': [5, 4, 3, 2], 'B': [1], 'C': []}
+    sys.stdin = io.StringIO('ab\nquit\n')
     with pytest.raises(SystemExit):
         towerofhanoi.getPlayerMove(towers)
     captured = capsys.readouterr()

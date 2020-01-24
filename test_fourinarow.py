@@ -36,6 +36,7 @@ def test_isWinner():
                 #input()
                 assert fourinarow.isWinner('X', b)
 
+                b = fourinarow.getNewBoard()
                 b[(x, y+3)] = 'X'
                 b[(x+1, y+2)] = 'X'
                 b[(x+2, y+1)] = 'X'
@@ -177,6 +178,3 @@ def test_main(capsys):
     captured = capsys.readouterr()
     assert 'There is a tie!' in captured.out
 
-
-if __name__ == '__main__':
-    pytest.main()
