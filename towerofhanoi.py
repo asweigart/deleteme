@@ -44,8 +44,8 @@ More info at https://en.wikipedia.org/wiki/Tower_of_Hanoi
 
 
 def getPlayerMove(towers):
-    """Ask the player which disk to move. Returns a two-string tuple
-    (fromTower, toTower) where the towers are 'A', 'B', or 'C'."""
+    """Asks the player for a move. Returns (fromTower, toTower)."""
+
     while True:  # Keep asking player until they enter a valid move.
         print('Enter the letters of "from" and "to" towers, or QUIT.')
         print('(e.g. AB to moves a disk from tower A to tower B.)')
@@ -65,7 +65,7 @@ def getPlayerMove(towers):
         fromTower, toTower = playerMove[0], playerMove[1]
 
         if len(towers[fromTower]) == 0:
-            # Make sure there is at least one disk on the "from" tower:
+            # The "from" tower cannot be an empty tower:
             print('You selected a tower with no disks.')
             continue  # Ask player again for their move.
         elif len(towers[toTower]) == 0:

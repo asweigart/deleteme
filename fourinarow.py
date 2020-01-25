@@ -8,10 +8,10 @@ EMPTY_SPACE = '.'  # A period is easier to count than a space.
 PLAYER_X = 'X'
 PLAYER_O = 'O'
 
-# Note: Update BOARD_TEMPLATE if BOARD_WIDTH is changed.
+# Note: Update BOARD_TEMPLATE & COLUMN_LABELS if BOARD_WIDTH is changed.
 BOARD_WIDTH = 7
 BOARD_HEIGHT = 6
-COLUMN_LABELS = tuple([str(n) for n in range(1, BOARD_WIDTH + 1)])
+COLUMN_LABELS = ('1', '2', '3', '4', '5', '6', '7')
 assert len(COLUMN_LABELS) == BOARD_WIDTH
 
 # The template string for displaying the board:
