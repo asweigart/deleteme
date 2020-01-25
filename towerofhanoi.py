@@ -50,19 +50,19 @@ def getPlayerMove(towers):
         print('Enter the letters of "from" and "to" towers, or QUIT.')
         print('(e.g. AB to moves a disk from tower A to tower B.)')
         print()
-        playerMove = input('> ').upper().strip()
+        response = input('> ').upper().strip()
 
-        if playerMove == 'QUIT':
+        if response == 'QUIT':
             print('Thanks for playing!')
             sys.exit()
 
         # Make sure the user entered valid tower letters:
-        if playerMove not in ('AB', 'AC', 'BA', 'BC', 'CA', 'CB'):
+        if response not in ('AB', 'AC', 'BA', 'BC', 'CA', 'CB'):
             print('Enter one of AB, AC, BA, BC, CA, or CB.')
             continue  # Ask player again for their move.
 
         # Syntactic sugar - Use more descriptive variable names:
-        fromTower, toTower = playerMove[0], playerMove[1]
+        fromTower, toTower = response[0], response[1]
 
         if len(towers[fromTower]) == 0:
             # The "from" tower cannot be an empty tower:

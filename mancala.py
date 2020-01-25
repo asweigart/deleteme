@@ -123,23 +123,23 @@ def getPlayerMove(playerTurn, board):
             print('Player 1, choose move: A-F (or QUIT)')
         elif playerTurn == '2':
             print('Player 2, choose move: G-L (or QUIT)')
-        pit = input('> ').upper().strip()
+        response = input('> ').upper().strip()
 
         # Check if the player wants to quit:
-        if pit == 'QUIT':
+        if response == 'QUIT':
             print('Thanks for playing!')
             sys.exit()
 
         # Make sure it is a valid pit to select:
-        if (playerTurn == '1' and pit not in PLAYER_1_PITS) or (
-            playerTurn == '2' and pit not in PLAYER_2_PITS
+        if (playerTurn == '1' and response not in PLAYER_1_PITS) or (
+            playerTurn == '2' and response not in PLAYER_2_PITS
         ):
             print('Please pick a letter on your side of the board.')
             continue  # Ask player again for their move.
-        if board.get(pit) == 0:
+        if board.get(response) == 0:
             print('Please pick a non-empty pit.')
             continue  # Ask player again for their move.
-        return pit
+        return response
 
 
 def makeMove(board, playerTurn, pit):
