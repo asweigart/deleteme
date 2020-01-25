@@ -138,39 +138,39 @@ def isWinner(playerTile, board):
     for columnIndex in range(BOARD_WIDTH - 3):
         for rowIndex in range(BOARD_HEIGHT):
             # Check for four-in-a-row going across to the right:
-            space1 = board[(columnIndex, rowIndex)]
-            space2 = board[(columnIndex + 1, rowIndex)]
-            space3 = board[(columnIndex + 2, rowIndex)]
-            space4 = board[(columnIndex + 3, rowIndex)]
-            if space1 == space2 == space3 == space4 == playerTile:
+            tile1 = board[(columnIndex, rowIndex)]
+            tile2 = board[(columnIndex + 1, rowIndex)]
+            tile3 = board[(columnIndex + 2, rowIndex)]
+            tile4 = board[(columnIndex + 3, rowIndex)]
+            if tile1 == tile2 == tile3 == tile4 == playerTile:
                 return True
 
     for columnIndex in range(BOARD_WIDTH):
         for rowIndex in range(BOARD_HEIGHT - 3):
             # Check for four-in-a-row going down:
-            space1 = board[(columnIndex, rowIndex)]
-            space2 = board[(columnIndex, rowIndex + 1)]
-            space3 = board[(columnIndex, rowIndex + 2)]
-            space4 = board[(columnIndex, rowIndex + 3)]
-            if space1 == space2 == space3 == space4 == playerTile:
+            tile1 = board[(columnIndex, rowIndex)]
+            tile2 = board[(columnIndex, rowIndex + 1)]
+            tile3 = board[(columnIndex, rowIndex + 2)]
+            tile4 = board[(columnIndex, rowIndex + 3)]
+            if tile1 == tile2 == tile3 == tile4 == playerTile:
                 return True
 
     for columnIndex in range(BOARD_WIDTH - 3):
         for rowIndex in range(BOARD_HEIGHT - 3):
             # Check for four-in-a-row going right-down diagonal:
-            space1 = board[(columnIndex, rowIndex)]
-            space2 = board[(columnIndex + 1, rowIndex + 1)]
-            space3 = board[(columnIndex + 2, rowIndex + 2)]
-            space4 = board[(columnIndex + 3, rowIndex + 3)]
-            if space1 == space2 == space3 == space4 == playerTile:
+            tile1 = board[(columnIndex, rowIndex)]
+            tile2 = board[(columnIndex + 1, rowIndex + 1)]
+            tile3 = board[(columnIndex + 2, rowIndex + 2)]
+            tile4 = board[(columnIndex + 3, rowIndex + 3)]
+            if tile1 == tile2 == tile3 == tile4 == playerTile:
                 return True
 
             # Check for four-in-a-row going left-down diagonal:
-            space1 = board[(columnIndex + 3, rowIndex)]
-            space2 = board[(columnIndex + 2, rowIndex + 1)]
-            space3 = board[(columnIndex + 1, rowIndex + 2)]
-            space4 = board[(columnIndex, rowIndex + 3)]
-            if space1 == space2 == space3 == space4 == playerTile:
+            tile1 = board[(columnIndex + 3, rowIndex)]
+            tile2 = board[(columnIndex + 2, rowIndex + 1)]
+            tile3 = board[(columnIndex + 1, rowIndex + 2)]
+            tile4 = board[(columnIndex, rowIndex + 3)]
+            if tile1 == tile2 == tile3 == tile4 == playerTile:
                 return True
     return False
 
