@@ -22,10 +22,18 @@ More info at https://en.wikipedia.org/wiki/Tower_of_Hanoi
 """
     )
 
-    # Set up the towers. The end of the list is the top of the tower.
+    """The towers dictionary has keys 'A', 'B', and 'C' and values
+    that are lists representing a tower of disks. The list contains
+    integers representing disks of different sizes, and the start of
+    the list is the bottom of the tower. For a game with 5 disks,
+    the list [5, 4, 3, 2, 1] represents a completed tower. The blank
+    list [] represents a tower of no disks. The list [1, 3] has a
+    larger disk on top of a smaller disk and is an invalid
+    configuration. The list [3, 1] is allowed since smaller disks
+    can go on top of larger ones."""
     towers = {'A': copy.copy(COMPLETE_TOWER), 'B': [], 'C': []}
 
-    while True:  # Run a single turn.
+    while True:  # Run a single turn on each iteration of this loop.
         # Display the towers and disks:
         displayTowers(towers)
 
@@ -110,6 +118,6 @@ def displayDisk(width):
         print(emptySpace + disk + numLabel + disk + emptySpace, end='')
 
 
-# If the program is run (instead of imported), run the game:
+# If this program was run (instead of imported), run the game:
 if __name__ == '__main__':
     main()

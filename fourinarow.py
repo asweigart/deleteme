@@ -175,6 +175,6 @@ def isWinner(playerTile, board):
     return False
 
 
-# If the program is run (instead of imported), run the game:
+# If this program was run (instead of imported), run the game:
 if __name__ == '__main__':
     main()
