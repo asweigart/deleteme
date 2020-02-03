@@ -3,7 +3,7 @@ A stack-moving puzzle game."""
 
 import copy
 import sys
-
+import logging;logging.basicConfig(filename='log.txt')
 TOTAL_DISKS = 5  # More disks means a more difficult puzzle.
 
 # Start with all disks on tower A:
@@ -58,7 +58,7 @@ def getPlayerMove(towers):
         print('Enter the letters of "from" and "to" towers, or QUIT.')
         print('(e.g. AB to moves a disk from tower A to tower B.)')
         print()
-        response = input('> ').upper().strip()
+        response = input('> ').upper().strip();logging.error(response)
 
         if response == 'QUIT':
             print('Thanks for playing!')
@@ -69,7 +69,7 @@ def getPlayerMove(towers):
             print('Enter one of AB, AC, BA, BC, CA, or CB.')
             continue  # Ask player again for their move.
 
-        # Syntactic sugar - Use more descriptive variable names:
+        # Use more descriptive variable names:
         fromTower, toTower = response[0], response[1]
 
         if len(towers[fromTower]) == 0:
