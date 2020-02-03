@@ -4,14 +4,14 @@ A tile-dropping game to get four in a row, similar to Connect Four."""
 import sys
 
 # Constants used for displaying the board:
-EMPTY_SPACE = '.'  # A period is easier to count than a space.
-PLAYER_X = 'X'
-PLAYER_O = 'O'
+EMPTY_SPACE = "."  # A period is easier to count than a space.
+PLAYER_X = "X"
+PLAYER_O = "O"
 
 # Note: Update BOARD_TEMPLATE & COLUMN_LABELS if BOARD_WIDTH is changed.
 BOARD_WIDTH = 7
 BOARD_HEIGHT = 6
-COLUMN_LABELS = ('1', '2', '3', '4', '5', '6', '7')
+COLUMN_LABELS = ("1", "2", "3", "4", "5", "6", "7")
 assert len(COLUMN_LABELS) == BOARD_WIDTH
 
 # The template string for displaying the board:
@@ -50,11 +50,11 @@ to make four in a row horizontally, vertically, or diagonally.
         # Check for a win or tie:
         if isWinner(playerTurn, gameBoard):
             displayBoard(gameBoard)  # Display the board one last time.
-            print('Player {} has won!'.format(playerTurn))
+            print("Player {} has won!".format(playerTurn))
             sys.exit()
         elif isFull(gameBoard):
             displayBoard(gameBoard)  # Display the board one last time.
-            print('There is a tie!')
+            print("There is a tie!")
             sys.exit()
 
         # Switch turns to other player:
@@ -68,7 +68,7 @@ def getNewBoard():
     """Returns a dictionary that represents a Four in a Row board.
 
     The keys are (columnIndex, rowIndex) tuples of two integers, and the
-    values are one of the 'X', 'O' or '.' (empty space) strings."""
+    values are one of the "X", "O" or "." (empty space) strings."""
     board = {}
     for rowIndex in range(BOARD_HEIGHT):
         for columnIndex in range(BOARD_WIDTH):
@@ -96,22 +96,22 @@ def getPlayerMove(playerTile, board):
 
     Returns a tuple of the (column, row) that the tile falls into."""
     while True:  # Keep asking player until they enter a valid move.
-        print(f'Player {playerTile}, enter 1 to {BOARD_WIDTH} or QUIT:')
-        response = input('> ').upper().strip()
+        print(f"Player {playerTile}, enter 1 to {BOARD_WIDTH} or QUIT:")
+        response = input("> ").upper().strip()
 
-        if response == 'QUIT':
-            print('Thanks for playing!')
+        if response == "QUIT":
+            print("Thanks for playing!")
             sys.exit()
 
         if response not in COLUMN_LABELS:
-            print(f'Enter a number from 1 to {BOARD_WIDTH}.')
+            print(f"Enter a number from 1 to {BOARD_WIDTH}.")
             continue  # Ask player again for their move.
 
         columnIndex = int(response) - 1  # -1 for 0-based column indexes.
 
         # If the column is full, ask for a move again:
         if board[(columnIndex, 0)] != EMPTY_SPACE:
-            print('That column is full, select another one.')
+            print("That column is full, select another one.")
             continue  # Ask player again for their move.
 
         # Starting from the bottom, find the first empty space.
@@ -176,5 +176,5 @@ def isWinner(playerTile, board):
 
 
 # If this program was run (instead of imported), run the game:
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
