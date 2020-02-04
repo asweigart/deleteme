@@ -59,7 +59,6 @@ def getPlayerMove(towers):
         print("(e.g. AB to moves a disk from tower A to tower B.)")
         print()
         response = input("> ").upper().strip()
-        logging.error(response)
 
         if response == "QUIT":
             print("Thanks for playing!")
